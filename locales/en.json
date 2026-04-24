@@ -1,0 +1,13 @@
+{
+  "pair": {
+    "title": "ThirdReality login",
+    "email": "Username",
+    "password": "Password",
+    "failed": "Something went wrong, are the credentials correct?",
+    "save": "Save",
+    "saving": "Saving",
+    "error": "Something went wrong, try again",
+    "noemail": "Enter a username",
+    "nopassword": "Enter a password"
+  }
+}

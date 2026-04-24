@@ -1,0 +1,34 @@
+{
+  "id": "com.3reality.cloud",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Third Reality Hub"
+  },
+  "description": {
+    "en": "Add ThirdReality devices via the hub to receive OTA updates for devices"
+  },
+  "category": [
+    "appliances"
+  ],
+  "brandColor": "#12B2FA",
+  "source": "https://github.com/smarthomesven/homey-thirdreality-hub",
+  "bugs": {
+    "url": "https://github.com/smarthomesven/homey-thirdreality-hub/issues"
+  },
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Sven Serlier",
+    "email": "sven@dypodex.com"
+  }
+}
