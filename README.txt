@@ -1,1 +1,3 @@
 By using a ThirdReality Hub Gen2+ or earlier, you can update your devices with OTA while having them connected to Homey. Combine the full features of the ThirdReality hub with the automation power of Homey!
+
+NOTE: Hub MZ1 "Gen3" is NOT supported!
