@@ -9,10 +9,10 @@
     "local"
   ],
   "name": {
-    "en": "Third Reality Hub"
+    "en": "ThirdReality Hub"
   },
   "description": {
-    "en": "Add ThirdReality devices via the hub to receive OTA updates for devices"
+    "en": "Add ThirdReality devices via the hub"
   },
   "category": [
     "appliances"
