@@ -7,5 +7,8 @@
   },
   "1.0.2": {
     "en": "Added icon for smart plug"
+  },
+  "1.0.3": {
+    "en": "Fix README"
   }
 }
