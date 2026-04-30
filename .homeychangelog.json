@@ -13,5 +13,11 @@
   },
   "1.0.4": {
     "en": "Reduce app size"
+  },
+  "1.0.5": {
+    "en": "Reduce app size"
+  },
+  "1.0.6": {
+    "en": "Revert back to 1.0.3"
   }
 }
