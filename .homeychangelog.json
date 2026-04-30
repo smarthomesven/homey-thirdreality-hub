@@ -19,5 +19,8 @@
   },
   "1.0.6": {
     "en": "Revert back to 1.0.3"
+  },
+  "1.0.7": {
+    "en": "Added Dutch translation"
   }
 }
