@@ -54,7 +54,7 @@ module.exports = class MyDevice extends Homey.Device {
       if (reported.connected === 'true') {
         await this.setAvailable();
       } else {
-        await this.setUnavailable('The device is unreachable. Is it powered on?');
+        await this.setUnavailable(this.homey.__('errors.unreachable'));
         return; // Don't update stale capability values if device is offline
       }
     }
@@ -77,7 +77,7 @@ module.exports = class MyDevice extends Homey.Device {
    * onAdded is called when the user adds the device, called just after pairing.
    */
   async onAdded() {
-    this.log('MyDevice has been added');
+    this.log('Smart Plug device has been added');
   }
 
   /**
@@ -89,7 +89,7 @@ module.exports = class MyDevice extends Homey.Device {
    * @returns {Promise<string|void>} return a custom message that will be displayed
    */
   async onSettings({ oldSettings, newSettings, changedKeys }) {
-    this.log('MyDevice settings where changed');
+    this.log('Smart Plug device settings where changed');
   }
 
   /**
@@ -98,14 +98,14 @@ module.exports = class MyDevice extends Homey.Device {
    * @param {string} name The new name
    */
   async onRenamed(name) {
-    this.log('MyDevice was renamed');
+    this.log('Smart Plug device was renamed');
   }
 
   /**
    * onDeleted is called when the user deleted the device.
    */
   async onDeleted() {
-    this.log('MyDevice has been deleted');
+    this.log('Smart Plug device has been deleted');
   }
 
   async onUnit() {

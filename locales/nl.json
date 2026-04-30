@@ -1,0 +1,17 @@
+{
+  "pair": {
+    "title": "ThirdReality login",
+    "info": "Deze app communiceert met ThirdReality-apparaten via de hub. De app werkt alleen met Smart Hub Gen2+ en eerder. De MZ1 ('Gen3') hub wordt niet ondersteund!",
+    "email": "Gebruikersnaam",
+    "password": "Wachtwoord",
+    "failed": "Er is iets misgegaan, zijn de inloggegevens juist?",
+    "save": "Opslaan",
+    "saving": "Opslaan",
+    "error": "Er is iets misgegaan, probeer het opnieuw",
+    "noemail": "Voer een gebruikersnaam in",
+    "nopassword": "Voer een wachtwoord in"
+  },
+  "errors": {
+    "unreachable": "Het apparaat is onbereikbaar. Is het aangesloten?"
+  }
+}

@@ -1,6 +1,7 @@
 {
   "pair": {
     "title": "ThirdReality login",
+    "info": "This app communicates with ThirdReality devices via the hub. Only works with Smart Hub Gen2+ and earlier. The MZ1 hub is not supported!",
     "email": "Username",
     "password": "Password",
     "failed": "Something went wrong, are the credentials correct?",
@@ -9,5 +10,8 @@
     "error": "Something went wrong, try again",
     "noemail": "Enter a username",
     "nopassword": "Enter a password"
+  },
+  "errors": {
+    "unreachable": "The device is unreachable. Is it powered on?"
   }
 }

@@ -12,7 +12,8 @@
     "en": "ThirdReality Hub"
   },
   "description": {
-    "en": "Add ThirdReality devices via the hub"
+    "en": "Add ThirdReality devices via the hub",
+    "nl": "Verbind ThirdReality-apparaten via de hub"
   },
   "category": [
     "appliances"
