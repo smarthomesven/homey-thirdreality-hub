@@ -43,5 +43,8 @@
   },
   "1.0.14": {
     "en": "Update dependencies"
+  },
+  "1.0.15": {
+    "en": "Add debug menu"
   }
 }
