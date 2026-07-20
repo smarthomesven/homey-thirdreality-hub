@@ -6,11 +6,10 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-module.exports = class MyApp extends Homey.App {
+module.exports = class ThirdRealityHubApp extends Homey.App {
 
   async onInit() {
-    this.log('MyApp has been initialized');
-    // generate ID, random UUID
+    this.log('ThirdReality Hub app has been initialized');
     try {
       const { randomUUID } = require('crypto');
       let id = this.homey.settings.get('id');
@@ -31,6 +30,7 @@ module.exports = class MyApp extends Homey.App {
     }
     this.mqttClient = null;
     this._pendingThingIds = new Set();
+    this._debugCaptures = new Map(); // thingId -> { active: bool, messages: [] }
 
     await this.connectIfLoggedIn();
   }
@@ -88,6 +88,23 @@ module.exports = class MyApp extends Homey.App {
     client.on('message', (topic, payload) => {
       //this.log(`[MQTT] ${topic}: ${payload.toString()}`);
 
+      // --- Debug capture: record raw messages for any thing under active capture ---
+      const thingMatch = topic.match(/^\$aws\/things\/([^/]+)\//);
+      if (thingMatch) {
+        const capture = this._debugCaptures.get(thingMatch[1]);
+        if (capture && capture.active) {
+          capture.messages.push({
+            topic,
+            payload: payload.toString(),
+            timestamp: Date.now(),
+          });
+          const MAX_DEBUG_MESSAGES = 500;
+          if (capture.messages.length > MAX_DEBUG_MESSAGES) {
+            capture.messages.splice(0, capture.messages.length - MAX_DEBUG_MESSAGES);
+          }
+        }
+      }
+
       // Only handle shadow document updates
       // Topic format: $aws/things/<thingId>/shadow/update/documents
       const match = topic.match(/^\$aws\/things\/([^/]+)\/shadow\/update\/documents$/);
@@ -105,7 +122,6 @@ module.exports = class MyApp extends Homey.App {
 
       if (!state) return;
 
-      // Find the device instance and push the state to it
       const drivers = this.homey.drivers.getDrivers();
       for (const driver of Object.values(drivers)) {
         for (const device of driver.getDevices()) {
@@ -130,6 +146,31 @@ module.exports = class MyApp extends Homey.App {
     });
 
     this.mqttClient = client;
+  }
+
+  startDebugCapture(thingId) {
+    this._debugCaptures.set(thingId, { active: true, messages: [] });
+    // Safety net: ensure we're subscribed. Idempotent — harmless if the device
+    // already has an active subscription from its normal shadow updates.
+    this.subscribeDevice(thingId);
+    this.log(`[Debug] Started MQTT capture for ${thingId}`);
+    return true;
+  }
+
+  stopDebugCapture(thingId) {
+    const capture = this._debugCaptures.get(thingId);
+    if (capture) capture.active = false;
+    this.log(`[Debug] Stopped MQTT capture for ${thingId}`);
+    return capture ? capture.messages.length : 0;
+  }
+
+  getDebugMessages(thingId) {
+    const capture = this._debugCaptures.get(thingId);
+    return capture ? capture.messages : [];
+  }
+
+  clearDebugCapture(thingId) {
+    this._debugCaptures.delete(thingId);
   }
 
   publishMqtt(topic, payload) {

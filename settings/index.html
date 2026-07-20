@@ -188,6 +188,65 @@
                 body.appendChild(errorDiv);
               }
 
+              const thingId = device.clients && device.clients.thingName;
+
+              // --- MQTT capture controls ---
+              const captureContainer = document.createElement('div');
+              captureContainer.style.marginBottom = '10px';
+              captureContainer.style.display = 'flex';
+              captureContainer.style.alignItems = 'center';
+              captureContainer.style.gap = '10px';
+
+              const captureButton = document.createElement('button');
+              captureButton.className = 'homey-button-secondary-shadow';
+              captureButton.type = 'button';
+              captureButton.textContent = Homey.__('settings.startCapture');
+
+              const captureStatus = document.createElement('span');
+              captureStatus.style.fontSize = '13px';
+              captureStatus.style.color = '#666';
+
+              let capturing = false;
+              let capturedCount = 0;
+
+              captureButton.addEventListener('click', function() {
+                if (!thingId) {
+                  Homey.alert('No thing ID found for this device');
+                  return;
+                }
+
+                if (!capturing) {
+                  captureButton.disabled = true;
+                  Homey.api('POST', '/startMqttCapture', { deviceId: thingId }, function(err) {
+                    captureButton.disabled = false;
+                    if (err) {
+                      Homey.alert('Failed to start capture: ' + err.message);
+                      return;
+                    }
+                    capturing = true;
+                    captureButton.textContent = Homey.__('settings.stopCapture');
+                    captureStatus.textContent = Homey.__('settings.capturing');
+                  });
+                } else {
+                  captureButton.disabled = true;
+                  Homey.api('POST', '/stopMqttCapture', { deviceId: thingId }, function(err, result) {
+                    captureButton.disabled = false;
+                    if (err) {
+                      Homey.alert('Failed to stop capture: ' + err.message);
+                      return;
+                    }
+                    capturing = false;
+                    capturedCount = result.count;
+                    captureButton.textContent = Homey.__('settings.startCapture');
+                    captureStatus.textContent = capturedCount + ' ' + Homey.__('settings.messagesCaptured');
+                  });
+                }
+              });
+
+              captureContainer.appendChild(captureButton);
+              captureContainer.appendChild(captureStatus);
+              body.appendChild(captureContainer);
+
               const group = document.createElement('div');
               group.className = 'homey-form-group';
 
@@ -343,6 +402,7 @@
                 Homey.api('POST', '/send', {
                   message: fullMessage,
                   deviceName: device.siteName,
+                  deviceId: thingId,
                   data: device
                 }, function(err, result) {
                   submitButton.className = 'homey-button-primary-full';

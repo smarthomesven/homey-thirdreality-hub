@@ -122,7 +122,7 @@ module.exports = class MyDriver extends Homey.Driver {
         throw new Error("Invalid response from device list API");
       }
       const devices = response.data.result.data
-      .filter(device => device.thingType === "PLUG")
+      .filter(device => device.sType === "PLUG")
       .map(device => ({
         name: device.friendlyName,
         data: {

@@ -41,6 +41,14 @@
     "send": {
       "method": "POST",
       "path": "/send"
+    },
+    "startMqttCapture": {
+      "method": "POST",
+      "path": "/startMqttCapture"
+    },
+    "stopMqttCapture": {
+      "method": "POST",
+      "path": "/stopMqttCapture"
     }
   }
 }
