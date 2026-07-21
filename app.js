@@ -35,6 +35,10 @@ module.exports = class ThirdRealityHubApp extends Homey.App {
     await this.connectIfLoggedIn();
   }
 
+  requestShadow(thingId) {
+    this.publishMqtt(`$aws/things/${thingId}/shadow/get`, JSON.stringify({}));
+  }
+
   async connectIfLoggedIn() {
     if (!this.homey.settings.get('loggedIn')) {
       this.log('[App] Not logged in, skipping MQTT connect');
@@ -86,7 +90,7 @@ module.exports = class ThirdRealityHubApp extends Homey.App {
     });
 
     client.on('message', (topic, payload) => {
-      //this.log(`[MQTT] ${topic}: ${payload.toString()}`);
+      this.log(`[MQTT] ${topic}: ${payload.toString()}`);
 
       // --- Debug capture: record raw messages for any thing under active capture ---
       const thingMatch = topic.match(/^\$aws\/things\/([^/]+)\//);

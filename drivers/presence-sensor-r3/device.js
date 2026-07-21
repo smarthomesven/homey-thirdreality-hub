@@ -4,7 +4,7 @@ const Homey = require('homey');
 module.exports = class MutilPLSDevice extends Homey.Device {
 
   async onInit() {
-    const capabilities = ['onoff', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 'alarm_presence', 'measure_tvoc'];
+    const capabilities = ['onoff', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 'alarm_presence', 'measure_tvoc', 'light_mode'];
     for (const cap of capabilities) {
       if (!this.hasCapability(cap)) await this.addCapability(cap);
     }
@@ -14,20 +14,24 @@ module.exports = class MutilPLSDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('dim', async (value) => {
+      this.log('Dim capability changed to:', value);
       this.publishDesired({ brightness: Math.round(value * 100) });
     });
 
     this.registerCapabilityListener('light_hue', async (value) => {
       const sat = this.getCapabilityValue('light_saturation') ?? 1;
+      this.log('Light hue capability changed to:', value);
       this.publishDesired({ color: `hs(${Math.round(value * 360)},${Math.round(sat * 100)})` });
     });
 
     this.registerCapabilityListener('light_saturation', async (value) => {
+      this.log('Light saturation capability changed to:', value);
       const hue = this.getCapabilityValue('light_hue') ?? 0;
       this.publishDesired({ color: `hs(${Math.round(hue * 360)},${Math.round(value * 100)})` });
     });
 
     this.registerCapabilityListener('light_temperature', async (value) => {
+      this.log('Light temperature capability changed to:', value);
       const { min, max } = this._miredRange();
       const mired = min + value * (max - min);
       const kelvin = Math.round(1e6 / mired);
@@ -71,6 +75,7 @@ module.exports = class MutilPLSDevice extends Homey.Device {
     if ('colorTemperatureMaxMired' in reported) this._maxMired = reported.colorTemperatureMaxMired;
 
     const setSafe = async (cap, value) => {
+      this.log(`Setting capability ${cap} to: `, value);
       if (!this.hasCapability(cap)) return;
       try { await this.setCapabilityValue(cap, value); }
       catch (e) { this.log(`[Device] Failed to set ${cap}:`, e.message); }

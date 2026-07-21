@@ -114,7 +114,8 @@
         "light_saturation",
         "light_temperature",
         "alarm_presence",
-        "measure_tvoc"
+        "measure_tvoc",
+        "light_mode"
       ],
       "platforms": [
         "local"
