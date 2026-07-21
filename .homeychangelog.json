@@ -55,5 +55,8 @@
   },
   "1.1.1": {
     "en": "Fix presence sensor"
+  },
+  "1.1.2": {
+    "en": "Added more debug logging for the light"
   }
 }
