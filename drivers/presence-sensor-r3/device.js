@@ -4,7 +4,7 @@ const Homey = require('homey');
 module.exports = class MutilPLSDevice extends Homey.Device {
 
   async onInit() {
-    const capabilities = ['onoff', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 'alarm_motion', 'measure_tvoc'];
+    const capabilities = ['onoff', 'dim', 'light_hue', 'light_saturation', 'light_temperature', 'alarm_presence', 'measure_tvoc'];
     for (const cap of capabilities) {
       if (!this.hasCapability(cap)) await this.addCapability(cap);
     }
@@ -78,7 +78,7 @@ module.exports = class MutilPLSDevice extends Homey.Device {
 
     if ('OnOff' in reported) await setSafe('onoff', reported.OnOff === 'ON');
     if ('brightness' in reported) await setSafe('dim', reported.brightness / 100);
-    if ('motionStatus' in reported) await setSafe('alarm_motion', reported.motionStatus === 'ON');
+    if ('motionStatus' in reported) await setSafe('alarm_presence', reported.motionStatus === 'ON');
     if ('tvoc' in reported) await setSafe('measure_tvoc', reported.tvoc);
 
     if ('color' in reported) {
