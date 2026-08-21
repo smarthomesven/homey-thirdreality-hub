@@ -17,9 +17,10 @@ module.exports = class MyDriver extends Homey.Driver {
     session.setHandler("showView", async (viewId) => {
       if (viewId === 'login') {
         const loggedIn = this.homey.settings.get('loggedIn');
-        return loggedIn === true;
+        if (loggedIn) {
+          await session.showView('list_devices');
+        }
       }
-      return false;
     });
     session.setHandler("login", async (data) => {
       try {

@@ -3,17 +3,17 @@
 const Homey = require('homey');
 const axios = require('axios');
 
-module.exports = class PlugDriver extends Homey.Driver {
+module.exports = class HubDriver extends Homey.Driver {
 
   /**
    * onInit is called when the driver is initialized.
    */
   async onInit() {
-    this.log('Plug Driver has been initialized');
+    this.log('Hub driver has been initialized');
   }
 
   async onPair(session) {
-    this.log('Plug Driver pairing has started');
+    this.log('Hub driver pairing has started');
     session.setHandler("showView", async (viewId) => {
       if (viewId === 'login') {
         const loggedIn = this.homey.settings.get('loggedIn');
@@ -66,7 +66,7 @@ module.exports = class PlugDriver extends Homey.Driver {
   }
 
   async onRepair(session) {
-    this.log('Plug driver repairing has started');
+    this.log('Hub driver repairing has started');
     session.setHandler("login", async (data) => {
       try {
         const user = data.email;
@@ -123,7 +123,7 @@ module.exports = class PlugDriver extends Homey.Driver {
         throw new Error("Invalid response from device list API");
       }
       const devices = response.data.result.data
-      .filter(device => device.sType === "PLUG")
+      .filter(device => device.thingType === "HUB")
       .map(device => ({
         name: device.friendlyName,
         data: {

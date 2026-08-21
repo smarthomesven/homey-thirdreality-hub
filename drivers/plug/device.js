@@ -108,7 +108,7 @@ module.exports = class MyDevice extends Homey.Device {
     this.log('Smart Plug device has been deleted');
   }
 
-  async onUnit() {
+  async onUninit() {
     const thingId = this.getData().id;
     this.homey.app.unsubscribeDevice(thingId);
   }
