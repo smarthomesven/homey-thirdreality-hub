@@ -64,5 +64,8 @@
   },
   "1.2.0": {
     "en": "Added Hub driver and fixed minor bugs"
+  },
+  "1.2.1": {
+    "en": "Update dependencies"
   }
 }
