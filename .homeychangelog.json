@@ -70,5 +70,8 @@
   },
   "1.2.2": {
     "en": "Added icon for Hub"
+  },
+  "1.2.3": {
+    "en": "Update dependencies"
   }
 }
