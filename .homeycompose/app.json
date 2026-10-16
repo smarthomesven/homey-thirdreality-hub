@@ -1,6 +1,6 @@
 {
   "id": "com.3reality.cloud",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "compatibility": ">=12.5.0",
   "sdk": 3,
   "runtime": "nodejs",
